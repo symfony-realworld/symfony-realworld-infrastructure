@@ -74,10 +74,10 @@ services:
       args:
         user: ${USER}
         uid: ${USER_ID}
-      context: ../src/ms-user
+      context: ../src/ms-post
       dockerfile: Docker/Dockerfile
     volumes:
-      - "../src/ms-user/:/var/www/ms-post/"
+      - "../src/ms-post/:/var/www/ms-post/"
     environment:
       COMPOSER_MEMORY_LIMIT: ${COMPOSER_MEMORY_LIMIT}
       PHP_IDE_CONFIG: serverName=${XDEBUG_STORM_SERVER_NAME}
