@@ -9,3 +9,11 @@
 
 [Symfony]: <https://symfony.com>
 [php8.1]: <https://www.php.net/>
+
+## Сборка проекта
+
+Выполнить команду 
+
+```bash
+make setup
+```
