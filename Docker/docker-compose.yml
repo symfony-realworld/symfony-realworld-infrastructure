@@ -5,6 +5,8 @@ volumes:
     driver: local
   post_postgres_data:
     driver: local
+  minio_data:
+    driver: local
 
 services:
   nginx:
@@ -12,7 +14,7 @@ services:
     restart: always
     image: nginx:stable
     ports:
-      - "${NGINX-HOST-PORT}:80"
+      - "${NGINX_HOST_PORT}:80"
     volumes:
       - "./nginx/default.conf:/etc/nginx/conf.d/default.conf"
       - "../src/ms-user/:/var/www/ms-user"
@@ -37,7 +39,7 @@ services:
     container_name: realworld-ms-user-php
     restart: always
     build:
-      target: ${PHP_TARGET}
+      target: ${TARGET_VERSION_PHP}
       args:
         user: ${USER}
         uid: ${USER_ID}
@@ -68,7 +70,7 @@ services:
     container_name: realworld-ms-post-php
     restart: always
     build:
-      target: ${PHP_TARGET}
+      target: ${TARGET_VERSION_PHP}
       args:
         user: ${USER}
         uid: ${USER_ID}
