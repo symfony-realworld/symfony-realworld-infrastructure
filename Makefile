@@ -11,9 +11,11 @@ setup:
 	
 	# Настраиваем микросервис User
 	@cd Docker && docker-compose exec ms_user_php composer install
-	@cd Docker && docker-compose exec ms_user_php php bin/console doctrine:make:migration
-	
 	# Настраиваем микросервис Post
 	@cd Docker && docker-compose exec ms_post_php composer install
-	@cd Docker && docker-compose exec ms_post_php php bin/console doctrine:make:migration
 
+connect-to-user-container:
+	@cd Docker && docker-compose exec ms_user_php bash
+
+connect-to-post-container:
+	@cd Docker && docker-compose exec ms_post_php bash
