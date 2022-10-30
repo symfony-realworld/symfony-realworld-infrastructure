@@ -7,6 +7,8 @@ volumes:
     driver: local
   minio_data:
     driver: local
+  cache:
+    driver: local
 
 services:
   nginx:
@@ -96,6 +98,15 @@ services:
       - "user_postgres_data:/var/lib/postgresql/data"
     networks:
         - default
+  cache:
+    container_name: realworld-cache
+    restart: always
+    image: redis:latest
+    ports:
+      - '${REDIS_PORT}:6379'
+    command: "redis-server --save 20 1 --loglevel warnng --requirepass ${REDIS_PASSWORD}"
+    volumes:
+      - cache:/data
 
 networks:
   default:
