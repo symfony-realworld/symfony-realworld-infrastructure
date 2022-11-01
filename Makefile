@@ -14,6 +14,13 @@ setup:
 	# Настраиваем микросервис Post
 	@cd Docker && docker-compose exec ms_post_php composer install
 
+docker-compose-down:
+	@cd Docker && docker-compose down
+
+docker-compose-up:
+	@cd Docker && docker-compose build
+	@cd Docker && docker-compose up -d
+
 connect-to-user-container:
 	@cd Docker && docker-compose exec ms_user_php bash
 
