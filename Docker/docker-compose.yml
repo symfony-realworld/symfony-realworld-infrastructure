@@ -37,6 +37,18 @@ services:
     networks:
       - default
 
+  swagger:
+    container_name: realworld-swagger
+    image: swaggerapi/swagger-ui
+    ports:
+      - "${SWAGGER_HOST_PORT}:8000"
+    environment:
+      URLS: "[
+        { url: \" http://localhost:8080/user/swagger/api.yml\", name: \"User\"},
+        { url: \" http://localhost:8080/post/swagger/api/yml\", name: \"Post\"}]"
+    networks:
+      - default
+
   ms_user_php:
     container_name: realworld-ms-user-php
     restart: always
