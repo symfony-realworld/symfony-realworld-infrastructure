@@ -13,12 +13,10 @@ setup:
 	@cd Docker && docker-compose exec ms_user_php composer install
 	@cd Docker && docker-compose exec ms_user_php php bin/console doctrine:database:create --if-not-exists
 	@cd Docker && docker-compose exec ms_user_php php bin/console doctrine:migrations:migrate --allow-no-migration
-	@cd Docker && docker-compose exec ms_user_php php bin/console lexik:jwt:generate-keypair
 	# Настраиваем микросервис Post
 	@cd Docker && docker-compose exec ms_post_php composer install
 	@cd Docker && docker-compose exec ms_post_php php bin/console doctrine:database:create --if-not-exists
 	@cd Docker && docker-compose exec ms_post_php php bin/console doctrine:migrations:migrate --allow-no-migration
-	@cd Docker && docker-compose exec ms_post_php php bin/console lexik:jwt:generate-keypair
 
 configure-jwt: 
 	@mkdir -p jwt
