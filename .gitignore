@@ -1,3 +1,2 @@
 /src
-/jwt/*.pem
-/jwt/*.pub
+/jwt
