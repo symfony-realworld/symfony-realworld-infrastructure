@@ -57,6 +57,7 @@ services:
       args:
         user: ${USER}
         uid: ${USER_ID}
+        http_proxy: ${HTTP_PROXY}
       context: ../src/ms-user
       dockerfile: Docker/Dockerfile
     volumes:
@@ -88,6 +89,7 @@ services:
       args:
         user: ${USER}
         uid: ${USER_ID}
+        http_proxy: ${HTTP_PROXY}
       context: ../src/ms-post
       dockerfile: Docker/Dockerfile
     volumes:
@@ -107,7 +109,7 @@ services:
     env_file:
       - "../src/ms-post/.env"
     volumes:
-      - "user_postgres_data:/var/lib/postgresql/data"
+      - "post_postgres_data:/var/lib/postgresql/data"
     networks:
         - default
   cache:
