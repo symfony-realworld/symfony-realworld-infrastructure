@@ -7,6 +7,8 @@ volumes:
     driver: local
   minio_data:
     driver: local
+  cache:
+    driver: local
 
 services:
   nginx:
@@ -35,6 +37,18 @@ services:
     networks:
       - default
 
+  swagger:
+    container_name: realworld-swagger
+    image: swaggerapi/swagger-ui
+    ports:
+      - "${SWAGGER_HOST_PORT}:8000"
+    environment:
+      URLS: "[
+        { url: \" http://localhost:8080/user/swagger/api.yml\", name: \"User\"},
+        { url: \" http://localhost:8080/post/swagger/api/yml\", name: \"Post\"}]"
+    networks:
+      - default
+
   ms_user_php:
     container_name: realworld-ms-user-php
     restart: always
@@ -43,6 +57,7 @@ services:
       args:
         user: ${USER}
         uid: ${USER_ID}
+        http_proxy: ${HTTP_PROXY}
       context: ../src/ms-user
       dockerfile: Docker/Dockerfile
     volumes:
@@ -74,6 +89,7 @@ services:
       args:
         user: ${USER}
         uid: ${USER_ID}
+        http_proxy: ${HTTP_PROXY}
       context: ../src/ms-post
       dockerfile: Docker/Dockerfile
     volumes:
@@ -93,9 +109,18 @@ services:
     env_file:
       - "../src/ms-post/.env"
     volumes:
-      - "user_postgres_data:/var/lib/postgresql/data"
+      - "post_postgres_data:/var/lib/postgresql/data"
     networks:
         - default
+  cache:
+    container_name: realworld-cache
+    restart: always
+    image: redis:latest
+    ports:
+      - '${REDIS_PORT}:6379'
+    command: "redis-server --save 20 1 --loglevel debug --requirepass ${REDIS_PASSWORD}"
+    volumes:
+      - cache:/data
 
 networks:
   default:
